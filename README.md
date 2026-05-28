@@ -34,6 +34,18 @@ The raw dataset is not committed to this repository. Place it locally at:
 
     data/raw/iot_telemetry_data.csv
 
+## Reproducible Pipeline
+
+After placing the raw Kaggle dataset at `data/raw/iot_telemetry_data.csv`, run:
+
+    python src/inspect_dataset.py
+    python src/prepare_dataset.py
+    python src/inject_spoofing_attacks.py
+
+The preprocessing script creates a cleaned local dataset, and the spoofing script creates a labeled local dataset with normal and simulated attack samples.
+
+Generated CSV files inside `data/processed/` are ignored by Git.
+
 ## Planned Workflow
 
 1. Inspect real IoT telemetry data
@@ -57,11 +69,13 @@ This project is focused on defensive monitoring and anomaly detection. It does n
     ├── docs/
     ├── results/
     ├── src/
-    │   └── inspect_dataset.py
+    │   ├── inspect_dataset.py
+    │   ├── prepare_dataset.py
+    │   └── inject_spoofing_attacks.py
     ├── .gitignore
     ├── requirements.txt
     └── README.md
 
 ## Current Status
 
-Initial project structure and real dataset inspection are implemented. Spoofing injection and detection models will be added in later steps.
+Initial project structure, real dataset inspection, telemetry preprocessing, and controlled spoofing injection are implemented. Rule-based detection, machine-learning models, and visual evaluation will be added in later steps.

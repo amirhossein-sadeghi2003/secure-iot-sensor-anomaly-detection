@@ -1,0 +1,14 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+data/raw/*
+!data/raw/.gitkeep
+
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*.swn

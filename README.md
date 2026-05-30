@@ -135,6 +135,22 @@ Replay-like detection improves strongly after adding temporal features:
 
 This shows that replay-like anomalies are difficult to detect from single sensor snapshots, but become more visible when sensor behavior over time is considered.
 
+## Visual Results
+
+### Detector Metric Comparison
+
+![Detector metric comparison](results/detector_metric_comparison.png)
+
+### Replay-Like Attack Detection Comparison
+
+![Replay detection comparison](results/replay_detection_comparison.png)
+
+Additional confusion-matrix plots are available in the `results/` directory:
+
+- `results/rulebased_confusion_matrix.png`
+- `results/ml_snapshot_confusion_matrix.png`
+- `results/ml_temporal_confusion_matrix.png`
+
 ## Repository Structure
 
     secure-iot-sensor-anomaly-detection/

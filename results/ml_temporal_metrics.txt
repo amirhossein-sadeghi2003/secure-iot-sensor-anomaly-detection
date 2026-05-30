@@ -1,0 +1,63 @@
+Temporal machine-learning IoT anomaly detector
+
+Input file: data/processed/labeled_iot_spoofing_data.csv
+Rows: 42000
+Training samples: 31500
+Test samples: 10500
+
+Model:
+RandomForestClassifier with snapshot and temporal features
+
+Base sensor features:
+- co_level
+- humidity
+- light
+- lpg_level
+- motion
+- smoke_level
+- temperature_c
+
+Temporal features:
+- co_level_abs_delta
+- humidity_abs_delta
+- light_abs_delta
+- lpg_level_abs_delta
+- motion_abs_delta
+- smoke_level_abs_delta
+- temperature_c_abs_delta
+- sensor_change_sum
+- same_light_as_previous
+- same_motion_as_previous
+- same_signature_as_previous
+- duplicate_signature_seen_before
+- low_change_flag
+
+Confusion matrix [normal, attack]:
+[[7060  440]
+ [  56 2944]]
+
+Accuracy:  0.9528
+Precision: 0.8700
+Recall:    0.9813
+F1-score:  0.9223
+
+Top feature importance:
+- sensor_change_sum: 0.2088
+- temperature_c_abs_delta: 0.1263
+- motion: 0.1207
+- smoke_level: 0.1131
+- temperature_c: 0.0825
+- lpg_level: 0.0807
+- co_level: 0.0607
+- lpg_level_abs_delta: 0.0344
+- co_level_abs_delta: 0.0334
+- same_motion_as_previous: 0.0317
+- smoke_level_abs_delta: 0.0268
+- motion_abs_delta: 0.0250
+
+Detection rate by attack type on test set:
+- gas_spoof: 1.0000 (601 samples)
+- light_motion_mismatch: 1.0000 (613 samples)
+- mixed_false_data: 1.0000 (546 samples)
+- temperature_spoof: 1.0000 (646 samples)
+- replay_like_values: 0.9057 (594 samples)

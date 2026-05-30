@@ -1,0 +1,43 @@
+Machine-learning IoT anomaly detector
+
+Input file: data/processed/labeled_iot_spoofing_data.csv
+Rows: 42000
+Training samples: 31500
+Test samples: 10500
+
+Model:
+RandomForestClassifier
+
+Feature columns:
+- co_level
+- humidity
+- light
+- lpg_level
+- motion
+- smoke_level
+- temperature_c
+
+Confusion matrix [normal, attack]:
+[[7483   17]
+ [ 593 2407]]
+
+Accuracy:  0.9419
+Precision: 0.9930
+Recall:    0.8023
+F1-score:  0.8875
+
+Feature importance:
+- temperature_c: 0.3029
+- motion: 0.2629
+- co_level: 0.1742
+- smoke_level: 0.1336
+- lpg_level: 0.1033
+- humidity: 0.0175
+- light: 0.0056
+
+Detection rate by attack type on test set:
+- gas_spoof: 1.0000 (601 samples)
+- light_motion_mismatch: 1.0000 (613 samples)
+- mixed_false_data: 1.0000 (546 samples)
+- temperature_spoof: 1.0000 (646 samples)
+- replay_like_values: 0.0017 (594 samples)

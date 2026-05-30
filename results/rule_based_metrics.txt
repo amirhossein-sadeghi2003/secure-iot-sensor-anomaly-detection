@@ -1,0 +1,35 @@
+Rule-based IoT anomaly detector
+
+Input file: data/processed/labeled_iot_spoofing_data.csv
+Rows: 42000
+Label source: attack_label
+Normal samples: 30000
+Attack samples: 12000
+Predicted normal: 34725
+Predicted attack: 7275
+
+Confusion matrix [normal, attack]:
+[[29922    78]
+ [ 4803  7197]]
+
+Accuracy:  0.8838
+Precision: 0.9893
+Recall:    0.5998
+F1-score:  0.7468
+
+Triggered rules:
+- temperature_c_outside_device_range: 5609
+- humidity_outside_device_range: 3340
+- co_level_outside_device_range: 5140
+- lpg_level_outside_device_range: 5435
+- smoke_level_outside_device_range: 5436
+- multiple_gas_sensor_spike: 4798
+- light_motion_mismatch: 1226
+- final_decision: 7275
+
+Detection rate by attack type:
+- gas_spoof: 1.0000 (2394 samples)
+- mixed_false_data: 1.0000 (2333 samples)
+- replay_like_values: 0.5198 (2393 samples)
+- light_motion_mismatch: 0.4937 (2469 samples)
+- temperature_spoof: 0.0029 (2411 samples)

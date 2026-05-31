@@ -1,0 +1,31 @@
+Temporal ML detector with device-wise time-based split
+
+Input file: data/processed/labeled_iot_spoofing_data.csv
+Rows: 42000
+Training samples: 29399
+Test samples: 12601
+Split strategy: first 70% of each device timeline for training, last 30% for testing
+
+Model:
+RandomForestClassifier with snapshot and temporal features
+
+Confusion matrix [normal, attack]:
+[[8525  535]
+ [  76 3465]]
+
+Accuracy:  0.9515
+Precision: 0.8662
+Recall:    0.9785
+F1-score:  0.9190
+
+Detection rate by attack type on time-based test set:
+- gas_spoof: 1.0000 (702 samples)
+- light_motion_mismatch: 1.0000 (712 samples)
+- mixed_false_data: 1.0000 (704 samples)
+- temperature_spoof: 0.9972 (708 samples)
+- replay_like_values: 0.8965 (715 samples)
+
+Test samples by device:
+- b8:27:eb:bf:9d:51: 5764
+- 00:0f:00:70:91:0a: 3532
+- 1c:bf:ce:15:ec:4d: 3305

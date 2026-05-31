@@ -135,6 +135,25 @@ Replay-like detection improves strongly after adding temporal features:
 
 This shows that replay-like anomalies are difficult to detect from single sensor snapshots, but become more visible when sensor behavior over time is considered.
 
+### Time-Based Temporal Evaluation
+
+I also tested the temporal detector with a device-wise time-based split: the first 70% of each device timeline is used for training, and the last 30% is used for testing.
+
+This is a harder check than the random split because the model is evaluated on later samples from each device timeline.
+
+Result:
+
+    Accuracy:  0.9515
+    Precision: 0.8662
+    Recall:    0.9785
+    F1-score:  0.9190
+
+Replay-like detection on the time-based test set stayed close to the random-split result:
+
+    replay_like_values: 0.8965
+
+This makes the replay-detection result more defensible. It still depends on simulated attack labels, but it is not only a random train/test split result.
+
 ## Visual Results
 
 ### Detector Metric Comparison
@@ -161,14 +180,16 @@ Additional confusion-matrix plots are available in the `results/` directory:
     ├── results/
     │   ├── rule_based_metrics.txt
     │   ├── ml_detector_metrics.txt
-    │   └── ml_temporal_metrics.txt
+    │   ├── ml_temporal_metrics.txt
+    │   └── ml_temporal_time_split_metrics.txt
     ├── src/
     │   ├── inspect_dataset.py
     │   ├── prepare_dataset.py
     │   ├── inject_spoofing_attacks.py
     │   ├── rule_based_detector.py
     │   ├── ml_detector.py
-    │   └── ml_temporal_detector.py
+    │   ├── ml_temporal_detector.py
+    │   └── ml_temporal_time_split_eval.py
     ├── .gitignore
     ├── requirements.txt
     └── README.md
@@ -179,7 +200,7 @@ The rule-based detector is precise but misses some attacks.
 
 The snapshot ML detector gives better overall performance, but fails on replay-like values.
 
-The temporal ML detector performs best overall because it uses changes over time, not only current sensor values.
+The temporal ML detector performs best overall because it uses changes over time, not only current sensor values. A device-wise time-based split gives a similar result, which makes the temporal replay-detection story more defensible.
 
 This is an important result for IoT security: some attacks are not obvious from individual sensor readings. They require temporal context.
 
@@ -187,7 +208,7 @@ This is an important result for IoT security: some attacks are not obvious from 
 
 The attack labels are generated from simulated spoofing scenarios, not from real compromised IoT devices.
 
-The train/test split is random, so future evaluation should test harder settings such as device-based splits or time-based splits.
+The original ML comparison uses a random train/test split. A device-wise time-based evaluation has now been added for the temporal detector, but future work should still test stricter settings such as fully device-held-out evaluation.
 
 The replay detection result depends on how replay-like values were simulated.
 
@@ -202,7 +223,7 @@ This repository is focused on defensive anomaly detection and secure monitoring.
 Possible next improvements:
 
 - add plots for anomaly timelines and confusion matrices
-- compare random split with time-based split
+- test fully device-held-out generalization
 - test device-based generalization
 - add a lightweight real-time monitor
 - connect the detector to an IoT / MQTT pipeline

@@ -1,0 +1,78 @@
+Temporal ML detector with device-held-out evaluation
+
+Input file: data/processed/labeled_iot_spoofing_data.csv
+Rows: 42000
+Split strategy: train on two devices, test on one held-out device
+
+Model:
+RandomForestClassifier with snapshot and temporal features
+
+============================================================
+Held-out device: 00:0f:00:70:91:0a
+Training samples: 30227
+Test samples: 11773
+
+Confusion matrix [normal, attack]:
+[[6561 1825]
+ [287 3100]]
+
+Accuracy:  0.8206
+Precision: 0.6294
+Recall:    0.9153
+F1-score:  0.7459
+
+Detection rate by attack type:
+- gas_spoof: 1.0000 (624 samples)
+- light_motion_mismatch: 1.0000 (712 samples)
+- mixed_false_data: 1.0000 (681 samples)
+- temperature_spoof: 0.9985 (681 samples)
+- replay_like_values: 0.5849 (689 samples)
+
+============================================================
+Held-out device: 1c:bf:ce:15:ec:4d
+Training samples: 30986
+Test samples: 11014
+
+Confusion matrix [normal, attack]:
+[[6257 1599]
+ [357 2801]]
+
+Accuracy:  0.8224
+Precision: 0.6366
+Recall:    0.8870
+F1-score:  0.7412
+
+Detection rate by attack type:
+- gas_spoof: 1.0000 (651 samples)
+- light_motion_mismatch: 1.0000 (670 samples)
+- mixed_false_data: 1.0000 (588 samples)
+- temperature_spoof: 0.9953 (638 samples)
+- replay_like_values: 0.4206 (611 samples)
+
+============================================================
+Held-out device: b8:27:eb:bf:9d:51
+Training samples: 22787
+Test samples: 19213
+
+Confusion matrix [normal, attack]:
+[[11270 2488]
+ [342 5113]]
+
+Accuracy:  0.8527
+Precision: 0.6727
+Recall:    0.9373
+F1-score:  0.7832
+
+Detection rate by attack type:
+- gas_spoof: 1.0000 (1119 samples)
+- light_motion_mismatch: 1.0000 (1087 samples)
+- mixed_false_data: 1.0000 (1064 samples)
+- temperature_spoof: 0.9918 (1092 samples)
+- replay_like_values: 0.6953 (1093 samples)
+
+============================================================
+Average across held-out devices:
+Accuracy:  0.8319
+Precision: 0.6462
+Recall:    0.9132
+F1-score:  0.7568

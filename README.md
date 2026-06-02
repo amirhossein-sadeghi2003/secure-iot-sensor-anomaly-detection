@@ -154,6 +154,23 @@ Replay-like detection on the time-based test set stayed close to the random-spli
 
 This makes the replay-detection result more defensible. It still depends on simulated attack labels, but it is not only a random train/test split result.
 
+### Device-Held-Out Temporal Evaluation
+
+I also tested a stricter setting where the model trains on two devices and tests on the third held-out device. This checks whether the temporal detector generalizes to an unseen device, not just later samples from devices already seen during training.
+
+Average result across the three held-out devices:
+
+    Accuracy:  0.8319
+    Precision: 0.6462
+    Recall:    0.9132
+    F1-score:  0.7568
+
+This is noticeably weaker than the random and time-based splits. Replay-like detection also drops on unseen devices:
+
+    replay_like_values: about 0.42 to 0.70 depending on the held-out device
+
+This is an important limitation. The temporal features help detect replay-like behavior, but device-specific behavior still matters. The next hard improvement should focus on device generalization, calibration differences, or more device-diverse training data.
+
 ## Visual Results
 
 ### Detector Metric Comparison
@@ -181,7 +198,8 @@ Additional confusion-matrix plots are available in the `results/` directory:
     │   ├── rule_based_metrics.txt
     │   ├── ml_detector_metrics.txt
     │   ├── ml_temporal_metrics.txt
-    │   └── ml_temporal_time_split_metrics.txt
+    │   ├── ml_temporal_time_split_metrics.txt
+    │   └── ml_temporal_device_holdout_metrics.txt
     ├── src/
     │   ├── inspect_dataset.py
     │   ├── prepare_dataset.py
@@ -189,7 +207,8 @@ Additional confusion-matrix plots are available in the `results/` directory:
     │   ├── rule_based_detector.py
     │   ├── ml_detector.py
     │   ├── ml_temporal_detector.py
-    │   └── ml_temporal_time_split_eval.py
+    │   ├── ml_temporal_time_split_eval.py
+    │   └── ml_temporal_device_holdout_eval.py
     ├── .gitignore
     ├── requirements.txt
     └── README.md
@@ -200,7 +219,7 @@ The rule-based detector is precise but misses some attacks.
 
 The snapshot ML detector gives better overall performance, but fails on replay-like values.
 
-The temporal ML detector performs best overall because it uses changes over time, not only current sensor values. A device-wise time-based split gives a similar result, which makes the temporal replay-detection story more defensible.
+The temporal ML detector performs best overall because it uses changes over time, not only current sensor values. A device-wise time-based split gives a similar result, but a device-held-out evaluation is harder and shows weaker generalization.
 
 This is an important result for IoT security: some attacks are not obvious from individual sensor readings. They require temporal context.
 
@@ -208,7 +227,7 @@ This is an important result for IoT security: some attacks are not obvious from 
 
 The attack labels are generated from simulated spoofing scenarios, not from real compromised IoT devices.
 
-The original ML comparison uses a random train/test split. A device-wise time-based evaluation has now been added for the temporal detector, but future work should still test stricter settings such as fully device-held-out evaluation.
+The original ML comparison uses a random train/test split. Time-based and device-held-out evaluations have now been added for the temporal detector. The device-held-out result is weaker, so future work should focus on improving cross-device generalization.
 
 The replay detection result depends on how replay-like values were simulated.
 
@@ -223,7 +242,7 @@ This repository is focused on defensive anomaly detection and secure monitoring.
 Possible next improvements:
 
 - add plots for anomaly timelines and confusion matrices
-- test fully device-held-out generalization
+- improve device-held-out generalization
 - test device-based generalization
 - add a lightweight real-time monitor
 - connect the detector to an IoT / MQTT pipeline
